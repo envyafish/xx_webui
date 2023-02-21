@@ -1,0 +1,35 @@
+on:
+  push:
+    branches:
+      - master
+
+name: Release
+
+permissions: write-all
+
+
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Setup Node.js environment
+        uses: actions/setup-node@v3.6.0
+        with:
+          node-version: 18.x
+      - run: npm run install
+      - run: npm run build
+      - run: zip -r webui.zip dist/*
+
+      - uses: marvinpinto/action-automatic-releases@latest
+        with:
+          repo_token: "${{ secrets.RELEASE_TOKEN }}"
+          automatic_release_tag: "${{ env.RELEASE_VERSION }}"
+          prerelease: false
+          title: "Release ${{ env.RELEASE_VERSION }}"
+          files: |
+            webui.zip
+
