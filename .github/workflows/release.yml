@@ -24,12 +24,13 @@ jobs:
       - run: npm run build
       - run: zip -r webui.zip dist/*
 
+
       - uses: marvinpinto/action-automatic-releases@latest
         with:
           repo_token: "${{ secrets.RELEASE_TOKEN }}"
-          automatic_release_tag: "${{ env.RELEASE_VERSION }}"
+          automatic_release_tag: v1.0.0
           prerelease: false
-          title: "Release ${{ env.RELEASE_VERSION }}"
+          title: v1.0.0
           files: |
             webui.zip
 
