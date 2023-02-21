@@ -20,7 +20,7 @@ jobs:
         uses: actions/setup-node@v3.6.0
         with:
           node-version: 18.x
-      - run: npm run install
+      - run: npm install
       - run: npm run build
       - run: zip -r webui.zip dist/*
 
