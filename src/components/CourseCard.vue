@@ -13,7 +13,7 @@
       <p class="card-text"><small class="text-muted">发行日期: {{ course.release_date }}</small></p>
       <div class="btn-group">
         <a class="card-link" v-if="course.status === 1" @click="confirmUnSub()">取消订阅</a>
-        <a class="card-link" v-if="course.status === 0" @click="subscribe()">订阅</a>
+        <a class="card-link" v-if="course.status <= 0" @click="subscribe()">订阅</a>
         <a class="card-link" @click="more">更多</a>
         <a class="card-link" v-if="course.status === 1" @click="downloadCourse()">提交下载</a>
         <a class="card-link" v-if="course.status === 2" @click="confirmUnSub()">删除记录</a>
