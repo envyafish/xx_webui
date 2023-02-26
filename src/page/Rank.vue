@@ -101,10 +101,10 @@ export default {
     },
     filter() {
       let filter_list = this.data_list
-      if (parseInt(this.status) === 0 || parseInt(this.status) !== 0) {
+      if (parseInt(this.status) === 0 || parseInt(this.status) > 0 || parseInt(this.status) < 0) {
         filter_list = filter_list.filter(rank => {
-          if (this.status === 0) {
-            return rank.status <= 0
+          if (parseInt(this.status) === 0) {
+            return parseInt(rank.status) <= 0
           }
           return parseInt(rank.status) === parseInt(this.status)
         })
