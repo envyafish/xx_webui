@@ -6,7 +6,7 @@
     <img :src="'https://www.javbus.com'+course.banner" class="card-img-top ratio227-153" v-if="showImage">
     <span class="badge text-bg-success" v-if="course.status === 2">已完成</span>
     <span class="badge text-bg-primary" v-if="course.status === 1">订阅中</span>
-    <span class="badge text-bg-danger" v-if="course.status === 0">未订阅</span>
+    <span class="badge text-bg-danger" v-if="course.status <= 0">未订阅</span>
     <div class="card-body">
       <h5 class="card-title">{{ course.code }}</h5>
       <p class="card-text text-ellipsis--3">{{ course.title }}</p>
