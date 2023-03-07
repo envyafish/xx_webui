@@ -35,10 +35,10 @@
             <div id="carouselExampleAutoplaying" class="carousel slide" data-bs-ride="carousel" v-if="showImage">
               <div class="carousel-inner">
                 <div class="carousel-item active">
-                  <img :src="'https://www.javbus.com'+course.banner" class="d-block w-100" alt="">
+                  <img :src="'https://www.javbus.com'+course.banner" class="d-block w-100">
                 </div>
-                <div class="carousel-item" v-for="(still,index) in course.still_photo.split(',')" :key="index">
-                  <img :src="'https://www.javbus.com'+still" class="d-block w-100" alt="">
+                <div class="carousel-item" v-for="(sample,index) in sampleImages" :key="index">
+                  <img :src="'https://www.javbus.com'+sample" class="d-block w-100">
                 </div>
               </div>
               <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleAutoplaying"
@@ -123,12 +123,16 @@ export default {
         'text-bg-dark'
       ],
       show: false,
-      showImage: localStorage.getItem('showImage')
+      showImage: localStorage.getItem('showImage'),
+      sampleImages: []
     }
   },
   emits: ['deliverTeacherName', 'refresh'],
   mounted() {
     this.canvas = new Offcanvas(this.$refs.bottomCanvas)
+    if (this.course.still_photo){
+      this.sampleImages = this.course.still_photo.split(',')
+    }
   },
   methods: {
     more() {
