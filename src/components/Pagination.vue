@@ -1,7 +1,7 @@
 <template>
-  <nav aria-label="Page navigation example">
+  <nav aria-label="Page navigation example" v-if="total>1">
     <ul class="pagination">
-      <li class="page-item" @click="previous()">
+      <li class="page-item" @click="previous()" v-if="currentPage>1">
         <a class="page-link" href="#" aria-label="Previous">
           <span aria-hidden="true">&laquo;</span>
         </a>
@@ -12,7 +12,7 @@
           v-for="(item,index) in total">
         <a class="page-link" href="#">{{ index + 1 }}</a>
       </li>
-      <li class="page-item" @click="next()">
+      <li class="page-item" @click="next()" v-if="currentPage<total">
         <a class="page-link" href="#" aria-label="Next">
           <span aria-hidden="true">&raquo;</span>
         </a>

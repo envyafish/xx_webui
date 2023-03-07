@@ -3,15 +3,15 @@
   <div class="container-fluid">
     <div class="btn-group" role="group" aria-label="Basic radio toggle button group">
       <input type="radio" class="btn-check" name="btnradio" id="btnradio1" v-model="status" value=""
-             @change="fetchCourse()" autocomplete="off">
+             @change="filter()" autocomplete="off">
       <label class="btn btn-outline-secondary" for="btnradio1">全部</label>
 
       <input type="radio" class="btn-check" name="btnradio" id="btnradio2" v-model="status" value="1"
-             @change="fetchCourse()" autocomplete="off">
+             @change="filter()" autocomplete="off">
       <label class="btn btn-outline-secondary" for="btnradio2">订阅中</label>
 
       <input type="radio" class="btn-check" name="btnradio" id="btnradio3" v-model="status" value="2"
-             @change="fetchCourse()" autocomplete="off">
+             @change="filter()" autocomplete="off">
       <label class="btn btn-outline-secondary" for="btnradio3">已完成</label>
       <div class="d-flex ms-2" role="search">
         <input class="form-control me-2" type="search" @keyup.enter="search()" v-model="keyword"
@@ -57,6 +57,10 @@ export default {
   methods: {
     pageChange(page) {
       this.currentPage = page
+      this.fetchCourse()
+    },
+    filter(){
+      this.currentPage = 1
       this.fetchCourse()
     },
     async fetchCourse() {

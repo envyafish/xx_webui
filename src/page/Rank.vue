@@ -19,7 +19,8 @@
              autocomplete="off">
       <label class="btn btn-outline-secondary" for="btnradio3">已完成</label>
       <div class="d-flex ms-2" role="search">
-        <input class="form-control me-2" type="search" @keyup.enter="search()" v-model="keyword" placeholder="番号/教师名" aria-label="Search">
+        <input class="form-control me-2" type="search" @keyup.enter="search()" v-model="keyword"
+               placeholder="番号/教师名" aria-label="Search">
         <button class="btn btn-outline-success" @click="search()">Search</button>
       </div>
     </div>
@@ -63,7 +64,7 @@ export default {
       keyword: '',
       alertShow: false,
       page: 1,
-      pageShow:false,
+      pageShow: false,
       prefix: '/api/plugins/xx/'
     }
   },
@@ -100,8 +101,11 @@ export default {
     },
     filter() {
       let filter_list = this.data_list
-      if (parseInt(this.status) === 0 || parseInt(this.status) > 0) {
+      if (parseInt(this.status) === 0 || parseInt(this.status) > 0 || parseInt(this.status) < 0) {
         filter_list = filter_list.filter(rank => {
+          if (parseInt(this.status) === 0) {
+            return parseInt(rank.status) <= 0
+          }
           return parseInt(rank.status) === parseInt(this.status)
         })
       }

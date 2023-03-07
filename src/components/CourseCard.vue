@@ -6,14 +6,14 @@
     <img :src="'https://www.javbus.com'+course.banner" class="card-img-top ratio227-153" v-if="showImage">
     <span class="badge text-bg-success" v-if="course.status === 2">已完成</span>
     <span class="badge text-bg-primary" v-if="course.status === 1">订阅中</span>
-    <span class="badge text-bg-danger" v-if="course.status === 0">未订阅</span>
+    <span class="badge text-bg-danger" v-if="course.status <= 0">未订阅</span>
     <div class="card-body">
       <h5 class="card-title">{{ course.code }}</h5>
       <p class="card-text text-ellipsis--3">{{ course.title }}</p>
       <p class="card-text"><small class="text-muted">发行日期: {{ course.release_date }}</small></p>
       <div class="btn-group">
         <a class="card-link" v-if="course.status === 1" @click="confirmUnSub()">取消订阅</a>
-        <a class="card-link" v-if="course.status === 0" @click="subscribe()">订阅</a>
+        <a class="card-link" v-if="course.status <= 0" @click="subscribe()">订阅</a>
         <a class="card-link" @click="more">更多</a>
         <a class="card-link" v-if="course.status === 1" @click="downloadCourse()">提交下载</a>
         <a class="card-link" v-if="course.status === 2" @click="confirmUnSub()">删除记录</a>

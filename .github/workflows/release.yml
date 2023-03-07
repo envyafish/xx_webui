@@ -28,9 +28,9 @@ jobs:
       - uses: marvinpinto/action-automatic-releases@latest
         with:
           repo_token: "${{ secrets.RELEASE_TOKEN }}"
-          automatic_release_tag: latest
+          automatic_release_tag: v1.0.3
           prerelease: false
-          title: v1.0.0
+          title: v1.0.3
           files: |
             webui.zip
 
