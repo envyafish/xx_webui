@@ -29,54 +29,58 @@
       <div class="card mb-3">
         <div class="row">
           <div class="col-md-4">
-            <div id="carouselExampleAutoplaying" class="carousel slide" data-bs-ride="carousel" v-if="showImage">
+            <div class="carousel slide" ref="carousel">
+              <div class="carousel-indicators">
+                <button type="button"  data-bs-slide-to="0" @click="to(0)" class="active"
+                        aria-current="true" aria-label="Slide 1"></button>
+                <button type="button" :data-bs-slide-to="index+1" v-for="(sample,index) in sampleImages" :key="index"
+                         @click="to(index+1)"></button>
+              </div>
               <div class="carousel-inner">
                 <div class="carousel-item active">
                   <img :src="'https://www.javbus.com'+course.banner" class="d-block w-100">
                 </div>
                 <div class="carousel-item" v-for="(sample,index) in sampleImages" :key="index">
-                  <img :src="'https://www.javbus.com'+sample" class="d-block w-100">
+                  <img :src="sample" class="d-block w-100">
                 </div>
               </div>
-              <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleAutoplaying"
-                      data-bs-slide="prev">
+              <button class="carousel-control-prev" type="button" @click="prev()">
                 <span class="carousel-control-prev-icon" aria-hidden="true"></span>
                 <span class="visually-hidden">Previous</span>
               </button>
-              <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleAutoplaying"
-                      data-bs-slide="next">
+              <button class="carousel-control-next" type="button" @click="next()">
                 <span class="carousel-control-next-icon" aria-hidden="true"></span>
                 <span class="visually-hidden">Next</span>
               </button>
             </div>
           </div>
-
-        </div>
-        <div class="col-md-8">
-          <div class="card-body">
-            <h5 class="card-title ">{{ course.title }}</h5>
-            <p class="card-text" v-if="course.producer">制作商: <span class="badge">{{ course.producer }}</span></p>
-            <p class="card-text" v-if="course.publisher">发行商: <span class="badge">{{ course.producer }}</span></p>
-            <p class="card-text" v-if="course.genres">类别:
-              <span class="badge" v-for="(genre,index) in course.genres.split(',')" :class="getRotateBadge(index)"
-                    :key="index">{{ genre }}</span>
-            </p>
-            <p class="card-text" v-if="course.casts">出演教师:
-              <span class="badge"
-                    v-for="(cast,index) in course.casts.split(',')"
-                    :key="index"
-                    style="cursor:pointer;text-decoration:underline"
-                    data-bs-dismiss="offcanvas"
-                    @click="deliverTeacherName(cast)">
+          <div class="col-md-8">
+            <div class="card-body">
+              <h5 class="card-title ">{{ course.title }}</h5>
+              <p class="card-text" v-if="course.producer">制作商: <span class="badge">{{ course.producer }}</span></p>
+              <p class="card-text" v-if="course.publisher">发行商: <span class="badge">{{ course.producer }}</span></p>
+              <p class="card-text" v-if="course.genres">类别:
+                <span class="badge" v-for="(genre,index) in course.genres.split(',')" :class="getRotateBadge(index)"
+                      :key="index">{{ genre }}</span>
+              </p>
+              <p class="card-text" v-if="course.casts">出演教师:
+                <span class="badge"
+                      v-for="(cast,index) in course.casts.split(',')"
+                      :key="index"
+                      style="cursor:pointer;text-decoration:underline"
+                      data-bs-dismiss="offcanvas"
+                      @click="deliverTeacherName(cast)">
                   {{ cast }}
                 </span>
-            </p>
-            <p class="card-text" v-if="course.duration">授课时长: <span
-                class="badge">{{ course.duration }} 分钟</span></p>
-            <p class="card-text"><small class="text-muted">发行日期: <span
-                class="badge">{{ course.release_date }}</span></small></p>
-            <a class="card-link" v-if="course.status === 1" @click="downloadCourse()">提交下载</a>
+              </p>
+              <p class="card-text" v-if="course.duration">授课时长: <span
+                  class="badge">{{ course.duration }} 分钟</span></p>
+              <p class="card-text"><small class="text-muted">发行日期: <span
+                  class="badge">{{ course.release_date }}</span></small></p>
+              <a class="card-link" v-if="course.status === 1" @click="downloadCourse()">提交下载</a>
+            </div>
           </div>
+
         </div>
       </div>
     </div>
@@ -88,7 +92,7 @@
 import {addCourse, deleteCourse, downloadCourse} from "../api/api";
 import Modal from "./Modal.vue";
 import Toast from "./Toast.vue";
-import {Offcanvas} from "bootstrap";
+import {Offcanvas, Carousel} from "bootstrap";
 import SpinnerModal from "./SpinnerModal.vue";
 
 export default {
@@ -121,17 +125,29 @@ export default {
       ],
       show: false,
       showImage: localStorage.getItem('showImage'),
-      sampleImages: []
+      sampleImages: [],
+      carousel: ''
     }
   },
   emits: ['deliverTeacherName', 'refresh'],
   mounted() {
     this.canvas = new Offcanvas(this.$refs.bottomCanvas)
-    if (this.course.still_photo){
+    this.carousel = new Carousel(this.$refs.carousel)
+    if (this.course.still_photo) {
       this.sampleImages = this.course.still_photo.split(',')
     }
+    console.log(this.sampleImages)
   },
   methods: {
+    to(index) {
+      this.carousel.to(index)
+    },
+    prev() {
+      this.carousel.prev()
+    },
+    next() {
+      this.carousel.next()
+    },
     more() {
       this.canvas.show()
     },
