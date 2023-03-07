@@ -29,9 +29,6 @@
       <div class="card mb-3">
         <div class="row">
           <div class="col-md-4">
-            <!--            <img :src="'https://www.javbus.com'+course.banner" class="img-fluid img-thumbnail rounded-start" alt="..."-->
-            <!--                 v-if="showImage">-->
-            <!--            <div>-->
             <div id="carouselExampleAutoplaying" class="carousel slide" data-bs-ride="carousel" v-if="showImage">
               <div class="carousel-inner">
                 <div class="carousel-item active">
