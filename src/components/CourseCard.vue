@@ -29,34 +29,56 @@
       <div class="card mb-3">
         <div class="row">
           <div class="col-md-4">
-            <img :src="'https://www.javbus.com'+course.banner" class="img-fluid img-thumbnail rounded-start" alt="..."
-                 v-if="showImage">
+            <!--            <img :src="'https://www.javbus.com'+course.banner" class="img-fluid img-thumbnail rounded-start" alt="..."-->
+            <!--                 v-if="showImage">-->
+            <!--            <div>-->
+            <div id="carouselExampleAutoplaying" class="carousel slide" data-bs-ride="carousel" v-if="showImage">
+              <div class="carousel-inner">
+                <div class="carousel-item active">
+                  <img :src="'https://www.javbus.com'+course.banner" class="d-block w-100" alt="">
+                </div>
+                <div class="carousel-item" v-for="(still,index) in course.still_photo.split(',')" :key="index">
+                  <img :src="'https://www.javbus.com'+still" class="d-block w-100" alt="">
+                </div>
+              </div>
+              <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleAutoplaying"
+                      data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Previous</span>
+              </button>
+              <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleAutoplaying"
+                      data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Next</span>
+              </button>
+            </div>
           </div>
-          <div class="col-md-8">
-            <div class="card-body">
-              <h5 class="card-title ">{{ course.title }}</h5>
-              <p class="card-text" v-if="course.producer">制作商: <span class="badge">{{ course.producer }}</span></p>
-              <p class="card-text" v-if="course.publisher">发行商: <span class="badge">{{ course.producer }}</span></p>
-              <p class="card-text" v-if="course.genres">类别:
-                <span class="badge" v-for="(genre,index) in course.genres.split(',')" :class="getRotateBadge(index)"
-                      :key="index">{{ genre }}</span>
-              </p>
-              <p class="card-text" v-if="course.casts">出演教师:
-                <span class="badge"
-                      v-for="(cast,index) in course.casts.split(',')"
-                      :key="index"
-                      style="cursor:pointer;text-decoration:underline"
-                      data-bs-dismiss="offcanvas"
-                      @click="deliverTeacherName(cast)">
+
+        </div>
+        <div class="col-md-8">
+          <div class="card-body">
+            <h5 class="card-title ">{{ course.title }}</h5>
+            <p class="card-text" v-if="course.producer">制作商: <span class="badge">{{ course.producer }}</span></p>
+            <p class="card-text" v-if="course.publisher">发行商: <span class="badge">{{ course.producer }}</span></p>
+            <p class="card-text" v-if="course.genres">类别:
+              <span class="badge" v-for="(genre,index) in course.genres.split(',')" :class="getRotateBadge(index)"
+                    :key="index">{{ genre }}</span>
+            </p>
+            <p class="card-text" v-if="course.casts">出演教师:
+              <span class="badge"
+                    v-for="(cast,index) in course.casts.split(',')"
+                    :key="index"
+                    style="cursor:pointer;text-decoration:underline"
+                    data-bs-dismiss="offcanvas"
+                    @click="deliverTeacherName(cast)">
                   {{ cast }}
                 </span>
-              </p>
-              <p class="card-text" v-if="course.duration">授课时长: <span
-                  class="badge">{{ course.duration }} 分钟</span></p>
-              <p class="card-text"><small class="text-muted">发行日期: <span
-                  class="badge">{{ course.release_date }}</span></small></p>
-              <a class="card-link" v-if="course.status === 1" @click="downloadCourse()">提交下载</a>
-            </div>
+            </p>
+            <p class="card-text" v-if="course.duration">授课时长: <span
+                class="badge">{{ course.duration }} 分钟</span></p>
+            <p class="card-text"><small class="text-muted">发行日期: <span
+                class="badge">{{ course.release_date }}</span></small></p>
+            <a class="card-link" v-if="course.status === 1" @click="downloadCourse()">提交下载</a>
           </div>
         </div>
       </div>
@@ -82,7 +104,8 @@ export default {
       publisher: '',
       genres: '',
       casts: '',
-      status: ''
+      status: '',
+      still_photo: ''
     }
   },
   components: [Modal, Toast, SpinnerModal],
