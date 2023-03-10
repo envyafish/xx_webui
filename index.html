@@ -19,17 +19,7 @@
     </style>
 </head>
 <body>
-<div id="app">
-
-</div>
+<div id="app"></div>
 <script type="module" src="/src/main.js"></script>
-<script>
-    const viewportHeight = Math.max(document.documentElement.clientHeight, window.innerHeight || 0);
-    const bottomBarHeight = window.visualViewport.height - viewportHeight;
-    document.documentElement.style.setProperty('--safe-area-inset-top', `${window.safeAreaInsets.top}px`);
-    document.documentElement.style.setProperty('--safe-area-inset-right', `${window.safeAreaInsets.right}px`);
-    document.documentElement.style.setProperty('--safe-area-inset-bottom', `${window.safeAreaInset.bottom + bottomBarHeight}px`);
-    document.documentElement.style.setProperty('--safe-area-inset-left', `${window.safeAreaInsets.left}px`);
-</script>
 </body>
 </html>
