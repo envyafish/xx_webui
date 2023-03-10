@@ -9,11 +9,27 @@
             content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, viewport-fit=cover"
     />
     <title>XX CLUB</title>
+    <style>
+        body{
+            padding-top: constant(safe-area-inset-top);
+            padding-top: env(safe-area-inset-top);
+            padding-bottom: constant(safe-area-inset-bottom);
+            padding-bottom: env(safe-area-inset-bottom);
+        }
+    </style>
 </head>
 <body>
 <div id="app">
 
 </div>
 <script type="module" src="/src/main.js"></script>
+<script>
+    const viewportHeight = Math.max(document.documentElement.clientHeight, window.innerHeight || 0);
+    const bottomBarHeight = window.visualViewport.height - viewportHeight;
+    document.documentElement.style.setProperty('--safe-area-inset-top', `${window.safeAreaInsets.top}px`);
+    document.documentElement.style.setProperty('--safe-area-inset-right', `${window.safeAreaInsets.right}px`);
+    document.documentElement.style.setProperty('--safe-area-inset-bottom', `${window.safeAreaInset.bottom + bottomBarHeight}px`);
+    document.documentElement.style.setProperty('--safe-area-inset-left', `${window.safeAreaInsets.left}px`);
+</script>
 </body>
 </html>
