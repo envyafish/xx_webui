@@ -3,7 +3,7 @@
   <spinner-modal ref="spinnerModal"></spinner-modal>
   <toast ref="toast"></toast>
   <div class="card mb-3">
-    <img :src="'https://www.javbus.com'+course.banner" class="card-img-top ratio227-153" v-if="showImage">
+    <img :src="course.banner.startsWith('http')?course.banner:'https://www.javbus.com'+course.banner" class="card-img-top ratio227-153" v-if="showImage">
     <span class="badge text-bg-success" v-if="course.status === 2">已完成</span>
     <span class="badge text-bg-primary" v-if="course.status === 1">订阅中</span>
     <span class="badge text-bg-danger" v-if="course.status <= 0">未订阅</span>
@@ -33,15 +33,15 @@
               <div class="carousel-indicators">
                 <button type="button"  data-bs-slide-to="0" @click="to(0)" class="active"
                         aria-current="true" aria-label="Slide 1"></button>
-                <button type="button" :data-bs-slide-to="index+1" v-for="(sample,index) in sampleImages" :key="index"
+                <button type="button" :data-bs-slide-to="index+1" v-for="(sample,index) in course.still_photo?course.still_photo.split(','):[]" :key="index"
                          @click="to(index+1)"></button>
               </div>
               <div class="carousel-inner">
                 <div class="carousel-item active">
-                  <img :src="'https://www.javbus.com'+course.banner" class="d-block w-100">
+                  <img :src="course.banner.startsWith('http')?course.banner:'https://www.javbus.com'+course.banner" class="d-block w-100">
                 </div>
-                <div class="carousel-item" v-for="(sample,index) in sampleImages" :key="index">
-                  <img :src="sample" class="d-block w-100">
+                <div class="carousel-item" v-for="(sample,index) in course.still_photo?course.still_photo.split(','):[]" :key="index">
+                  <img :src="sample.startsWith('http')?sample:'https://www.javbus.com'+sample" class="d-block w-100">
                 </div>
               </div>
               <button class="carousel-control-prev" type="button" @click="prev()">
@@ -125,7 +125,6 @@ export default {
       ],
       show: false,
       showImage: localStorage.getItem('showImage'),
-      sampleImages: [],
       carousel: ''
     }
   },
@@ -133,10 +132,6 @@ export default {
   mounted() {
     this.canvas = new Offcanvas(this.$refs.bottomCanvas)
     this.carousel = new Carousel(this.$refs.carousel)
-    if (this.course.still_photo) {
-      this.sampleImages = this.course.still_photo.split(',')
-    }
-    console.log(this.sampleImages)
   },
   methods: {
     to(index) {
