@@ -70,6 +70,10 @@
           <input class="form-check-input" type="checkbox" role="switch" v-model="only_chinese">
           <label class="form-check-label" for="flexSwitchCheckDefault">中文爱好者</label>
         </div>
+        <div class="mb-3 form-check form-switch">
+          <input class="form-check-input" type="checkbox" role="switch" v-model="auto_sub">
+          <label class="form-check-label" for="flexSwitchCheckDefault">自动订阅top20</label>
+        </div>
         <div>
           <button class="btn btn-primary mb-3" @click="saveConfig">保存配置</button>
         </div>
@@ -104,6 +108,7 @@ export default {
       msg_uid: [],
       msg_channel: [],
       only_chinese: false,
+      auto_sub: false,
       site_list: [],
       user_list: [],
       download_client_list: [],
@@ -118,6 +123,7 @@ export default {
         category: '',
         site_id: '',
         only_chinese: '',
+        auto_sub: '',
         max_size: '',
         min_size: '',
         download_client_name: '',
@@ -153,6 +159,7 @@ export default {
         this.msg_uid = this.config.msg_uid.split(',')
         this.msg_channel = this.config.msg_channel.split(',')
         this.only_chinese = this.config.only_chinese === 1
+        this.auto_sub = this.config.auto_sub === 1
       }
     },
     async saveConfig() {
@@ -161,6 +168,7 @@ export default {
       this.config.msg_uid = this.msg_uid.join(',')
       this.config.msg_channel = this.msg_channel.join(',')
       this.config.only_chinese = this.only_chinese ? 1 : 0
+      this.config.auto_sub = this.auto_sub ? 1 : 0
       if(this.config.max_size){
         this.config.max_size = parseInt(this.config.max_size)
       }
