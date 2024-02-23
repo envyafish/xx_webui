@@ -43,6 +43,21 @@
           </select>
         </div>
         <div class="mb-3">
+          <label class="form-label">飞天拉面神教(非必填)</label>
+          <input type="text" class="form-control" placeholder="token" v-model="config.fsm_token">
+        </div>
+        <div class="mb-3">
+          <input type="text" class="form-control" placeholder="passkey" v-model="config.fsm_passkey">
+        </div>
+        <div class="mb-3 row g-2">
+          <div class="col-8">
+            <input type="text" class="form-control" placeholder="salt(盐值)" v-model="config.fsm_salt">
+          </div>
+          <div class="col-4">
+            <button class="btn btn-primary" @click="getSalt">获取盐值</button>
+          </div>
+        </div>
+        <div class="mb-3">
           <label class="form-label">推送用户(非必填)</label>
           <select class="form-select" multiple v-model="msg_uid">
             <option v-for="(user,index) in user_list" :value="user.uid" :key="index">{{ user.nickname }}</option>
@@ -57,14 +72,20 @@
         </div>
         <toast ref="toast"></toast>
         <div class="mb-3">
-          <input type="text" class="form-control" placeholder="推送图片" v-model="config.msg_img">
-        </div>
-        <div class="mb-3">
           <label class="form-label">下载器(必填)</label>
           <select class="form-select" v-model="config.download_client_name">
             <option v-for="(client,index) in download_client_list" :value="client.name" :key="index">{{ client.name }}
             </option>
           </select>
+        </div>
+        <div class="mb-3">
+          <label class="form-label">媒体服务器配置，用于同步数据库</label>
+          <input type="text" class="form-control" placeholder="emby配置中小姐姐目录,多个目录用逗号分隔" v-model="config.emby_folders">
+        </div>
+        <div class="mb-3">
+          <input type="text" class="form-control" placeholder="plex小姐姐媒体库名称(非目录),多个媒体库用逗号分隔" v-model="config.plex_titles">
+        </div>
+        <div class="mb-3">
         </div>
         <div class="mb-3 form-check form-switch">
           <input class="form-check-input" type="checkbox" role="switch" v-model="only_chinese">
@@ -97,6 +118,8 @@
 <script>
 import {getConfig, setConfig, getSite, getUser, getChannel, getDownloadClient, getMediaPath} from "../api/api";
 import Toast from "../components/Toast.vue";
+import get_salt from "../utils/salt";
+
 export default {
   name: "Options",
   components:[Toast],
@@ -122,6 +145,9 @@ export default {
         download_path: '',
         category: '',
         site_id: '',
+        fsm_token: '',
+        fsm_passkey: '',
+        fsm_salt: '',
         only_chinese: '',
         auto_sub: '',
         max_size: '',
@@ -130,7 +156,9 @@ export default {
         channel: '',
         msg_uid: '',
         msg_channel: '',
-        msg_img: ''
+        msg_img: '',
+        emby_folders: '',
+        plex_titles: ''
       }
     }
   },
@@ -139,6 +167,10 @@ export default {
     await this.getConfig()
   },
   methods: {
+    getSalt() {
+      const salt = get_salt()
+      this.config.fsm_salt = salt
+    },
     async getOptions() {
       let siteRes = await getSite()
       this.site_list = siteRes.data
@@ -190,7 +222,7 @@ export default {
       } else {
         localStorage.removeItem('showImage')
       }
-    }
+    },
   }
 }
 </script>
