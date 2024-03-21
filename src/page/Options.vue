@@ -49,14 +49,6 @@
         <div class="mb-3">
           <input type="text" class="form-control" placeholder="passkey" v-model="config.fsm_passkey">
         </div>
-        <div class="mb-3 row g-2">
-          <div class="col-8">
-            <input type="text" class="form-control" placeholder="salt(盐值)" v-model="config.fsm_salt">
-          </div>
-          <div class="col-4">
-            <button class="btn btn-primary" @click="getSalt">获取盐值</button>
-          </div>
-        </div>
         <div class="mb-3">
           <label class="form-label">推送用户(非必填)</label>
           <select class="form-select" multiple v-model="msg_uid">
@@ -118,7 +110,6 @@
 <script>
 import {getConfig, setConfig, getSite, getUser, getChannel, getDownloadClient, getMediaPath} from "../api/api";
 import Toast from "../components/Toast.vue";
-import get_salt from "../utils/salt";
 
 export default {
   name: "Options",
@@ -147,7 +138,6 @@ export default {
         site_id: '',
         fsm_token: '',
         fsm_passkey: '',
-        fsm_salt: '',
         only_chinese: '',
         auto_sub: '',
         max_size: '',
@@ -167,10 +157,6 @@ export default {
     await this.getConfig()
   },
   methods: {
-    getSalt() {
-      const salt = get_salt()
-      this.config.fsm_salt = salt
-    },
     async getOptions() {
       let siteRes = await getSite()
       this.site_list = siteRes.data
