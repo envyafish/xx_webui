@@ -43,8 +43,12 @@
           </select>
         </div>
         <div class="mb-3">
+          <label class="form-label">馒头APIKEY(勾选馒头补充该项)</label>
+          <input type="text" class="form-control" placeholder="API_KEY" v-model="config.mteam_api_key">
+        </div>
+        <div class="mb-3">
           <label class="form-label">飞天拉面神教(非必填)</label>
-          <input type="text" class="form-control" placeholder="token" v-model="config.fsm_token">
+          <input type="text" class="form-control" placeholder="API_KEY" v-model="config.fsm_token">
         </div>
         <div class="mb-3">
           <input type="text" class="form-control" placeholder="passkey" v-model="config.fsm_passkey">
@@ -148,7 +152,8 @@ export default {
         msg_channel: '',
         msg_img: '',
         emby_folders: '',
-        plex_titles: ''
+        plex_titles: '',
+        mteam_api_key: '',
       }
     }
   },
